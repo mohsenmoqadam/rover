@@ -1,0 +1,5 @@
+// +> category = REPLY
+package rover.sample.type;
+// *> Code = 101
+message  Type {
+}

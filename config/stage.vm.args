@@ -1,0 +1,4 @@
+## Name of the node
+-name rover-stage@rover-stage-ip
+## Cookie for distributed erlang
+-setcookie rover-cookie

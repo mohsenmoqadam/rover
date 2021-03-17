@@ -1,0 +1,4 @@
+## Name of the node
+-name rover-prod@rover-prod-ip
+## Cookie for distributed erlang
+-setcookie rover-cookie
