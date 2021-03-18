@@ -17,10 +17,12 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    ExternalPort = 5151,
-    ExternalBacklog = 256,
-    ExternalSockPool = 100,
-    ExternalKeepalive = false, 
+    %% === Get Configurations
+    {ok, ExternalPort} = rover_conf:get('iot.socket.port'),
+    {ok, ExternalBacklog} = rover_conf:get('iot.socket.backlog'),
+    {ok, ExternalSockPool} = rover_conf:get('iot.socket.pool'),
+    {ok, ExternalKeepalive} = rover_conf:get('iot.socket.keepalive'),
+ 
     TecipeExternalListenerOpts = [ {monitor, true}
 				 , {pool, ExternalSockPool}
 				 ],
