@@ -17,12 +17,11 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    %% === Get Configurations
+    %% === Initialize IoT Socket
     {ok, ExternalPort} = rover_conf:get('iot.socket.port'),
     {ok, ExternalBacklog} = rover_conf:get('iot.socket.backlog'),
     {ok, ExternalSockPool} = rover_conf:get('iot.socket.pool'),
     {ok, ExternalKeepalive} = rover_conf:get('iot.socket.keepalive'),
- 
     TecipeExternalListenerOpts = [ {monitor, true}
 				 , {pool, ExternalSockPool}
 				 ],
@@ -37,6 +36,25 @@ start(_StartType, _StartArgs) ->
 					      , TecipeExternalListenerOpts
 					      , TecipeExternalTransportOpts
 					      ),   
+    
+    %% === Initialize Mobile Application Socket
+    {ok, WsIp0} = rover_conf:get('ws.host'),
+    {ok, WsIp} = inet:parse_ipv4_address(WsIp0),
+    {ok, WsPort} = rover_conf:get('ws.port'),
+    {ok, WsPath} = rover_conf:get('ws.path'),
+    {ok, WsPoolSize} = rover_conf:get('ws.pool.size'),
+    {ok, WsConnIdleTimeout} = rover_conf:get('ws.conn.idle.timeout'),
+    WsDispatch = cowboy_router:compile([{'_', [{ WsPath
+					       , rover_app_conn
+					       , [WsConnIdleTimeout]}
+					      ]}
+				       ]),
+    {ok, _} = cowboy:start_clear(websockets, WsPoolSize, [ {ip, WsIp}
+							 , {port, WsPort}
+							 ],
+				 #{ env => #{dispatch => WsDispatch}
+				  , http10_keepalive => false
+				  }),
 
     rover_sup:start_link().
 
