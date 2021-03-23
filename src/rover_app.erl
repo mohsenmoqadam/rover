@@ -17,6 +17,20 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
+    %% === Initialize Database
+    {ok, PoolSize} = rover_conf:get('db.pool.size'),
+    {ok, DatabaseIP} = rover_conf:get('db.ip'),
+    {ok, DatabaseName} = rover_conf:get('db.name'),
+    {ok, DatabaseUser} = rover_conf:get('db.user'),
+    {ok, DatabasePass} = rover_conf:get('db.pass'),
+    {ok, ConnectionRetryInterval} = rover_conf:get('db.conn.retry.interval'),
+    ok = rover_db_pool:start( PoolSize
+			    , DatabaseIP
+			    , DatabaseName
+			    , DatabaseUser
+			    , DatabasePass
+			    , ConnectionRetryInterval),
+
     %% === Initialize IoT Socket
     {ok, ExternalPort} = rover_conf:get('iot.socket.port'),
     {ok, ExternalBacklog} = rover_conf:get('iot.socket.backlog'),
