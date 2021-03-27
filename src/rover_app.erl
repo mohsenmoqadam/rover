@@ -17,7 +17,7 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
-    %% === Initialize Database
+    %% === Initialize Database Workers
     {ok, PoolSize} = rover_conf:get('db.pool.size'),
     {ok, DatabaseIP} = rover_conf:get('db.ip'),
     {ok, DatabaseName} = rover_conf:get('db.name'),

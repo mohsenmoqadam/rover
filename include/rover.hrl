@@ -3,6 +3,8 @@
 -ifndef(HEADER_ROVER).
 -define(HEADER_ROVER, true).
 
+-type uid() :: non_neg_integer().
+-type pno() :: string().
 
 -ifdef(TEST).
 -define(LOG_ERROR(Format, Args), ct:print(default, 50, Format, Args)).

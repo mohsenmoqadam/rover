@@ -2,7 +2,7 @@
 
 -export([start/6]).
 
--define(POOL_NAME, mariadb_conn_pool).
+-define(POOL_NAME, db_worrkers_pool).
 
 start( PoolSize
      , DatabaseIP
