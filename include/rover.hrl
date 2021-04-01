@@ -5,6 +5,12 @@
 
 -type uid() :: non_neg_integer().
 -type pno() :: string().
+-type aid() :: non_neg_integer().
+
+-define(NOW_SEC(), erlang:system_time(seconds)).
+-define(NOW_MILLI(), erlang:system_time(milli_seconds)).
+-define(NOW_MICRO(), erlang:system_time()).
+-define(NOW(), erlang:system_time()).
 
 -ifdef(TEST).
 -define(LOG_ERROR(Format, Args), ct:print(default, 50, Format, Args)).

@@ -17,6 +17,11 @@
 %%====================================================================
 
 start(_StartType, _StartArgs) ->
+    ok = application:ensure_started(ranch),
+    ok = application:ensure_started(cowlib),
+    ok = application:ensure_started(cowboy),
+    application:ensure_all_started(inets),
+
     %% === Initialize Database Workers
     {ok, PoolSize} = rover_conf:get('db.pool.size'),
     {ok, DatabaseIP} = rover_conf:get('db.ip'),
