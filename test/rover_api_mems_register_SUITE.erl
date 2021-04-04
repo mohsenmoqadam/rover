@@ -65,7 +65,7 @@ t1_registeration(Config) ->
 			 , device_cpu_architacture => <<"---DCPU---">>
 			 }
 	       },
-    {ok, RegistrationToken} = rover_uda:send_data(UDA, GetRegistrationToken),
-    %RegistrationToken = maps:get(<<"registration_token">>, RegistrationToken),
+    {ok, RegistrationTokenObject} = rover_uda:send_data(UDA, GetRegistrationToken),
+    RegistrationToken = maps:get(<<"registration_token">>, RegistrationTokenObject#object.body),
 
     ok.
